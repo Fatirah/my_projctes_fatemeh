@@ -1,0 +1,90 @@
+import requests,json
+
+result = requests.get("https://google.com")
+print(result.status_code)
+import requests,json
+
+result = requests.get("https://instagram.com")
+print(result.status_code)
+
+import requests, json
+
+api_key="6f211caa43084ceb127a9176631f8305"
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+city_name = input("Enter city name : ")
+
+complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&units=metric"
+print(complete_url)
+
+response = requests.get(complete_url)
+x = response.json()
+
+print(x)
+print(x['name'])
+print(x['coord'])
+print(x['main']['temp'])
+
+import requests, json
+import winsound#ماژول برای به صدا در آمدن بوق لپ تاپ 
+
+api_key = "6f211caa43084ceb127a9176631f8305"
+city_name = "ilam,IR"
+temp_limit = 30
+
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&units=metric"
+print(complete_url)
+response = requests.get(complete_url)
+x = response.json()
+print(x)
+temp = x['main']['temp']
+print("temp is: ", end="")
+print(x['main']['temp'])
+
+if temp > temp_limit:
+    print("🥵هوا گرم شد کولر را روشن کنید")
+    winsound.Beep(1200, 700)#700میلی ثانیه
+    #1200فرکانس
+else:
+    print("😊دمای هوا نرمال است")
+
+
+import requests
+
+api_key = "6f211caa43084ceb127a9176631f8305"
+city_name = "Tehran"
+temp_limit = 30
+
+bot_token = "8977052722:AAEQiekeJk07KUC_AEYq893cC9xLam89398"
+chat_id = "1931559810"
+
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+def send_telegram_message(text):
+    telegram_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    data = {"chat_id": chat_id, "text": text}
+    requests.post(telegram_url, data=data)
+
+params = {
+    "appid": api_key,
+    "q": city_name,
+    "units": "metric"
+}
+
+complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&units=metric"
+print(complete_url)
+response = requests.get(complete_url)
+x = response.json()
+print(x)
+
+temp = x["main"]["temp"]
+print("temp is:", temp)
+
+if temp >= temp_limit:
+    print("🥵هوا گرم شد کولر را روشن کنید")
+    send_telegram_message("🥵هوا گرم شد، کولر را روشن کنید")
+else:
+    print("😊دمای هوا نرمال است")
+
